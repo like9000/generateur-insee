@@ -16,10 +16,16 @@ cd backend
 python -m venv .venv
 source .venv/bin/activate
 pip install -e .
-uvicorn app.main:app --reload
+# Démarrage assisté sans fichier `.env`
+python -m app.cli --sirene-api-key "votre_cle_api" --reload
+
+# Démarrage classique (en supposant les variables déjà définies)
+# uvicorn app.main:app --reload
 ```
 
-Les variables d'environnement peuvent être définies dans un fichier `.env` à la racine du backend :
+Le lanceur `python -m app.cli` permet de fournir les paramètres sensibles directement via la ligne de commande ou via des invites interactives. Les valeurs sont appliquées à l'environnement d'exécution avant de démarrer Uvicorn. Cela évite de créer un fichier `.env` si vous ne le souhaitez pas.
+
+Vous pouvez toujours définir les variables d'environnement dans un fichier `.env` à la racine du backend si vous préférez :
 
 ```env
 GENERATEUR_DATABASE_URL=sqlite:///./data/app.db
